@@ -1,4 +1,4 @@
-import { Router, getExpressRouter } from "./framework/router";
+import { getExpressRouter, Router } from "./framework/router";
 
 import { Authing, Sessioning } from "./app";
 import { SessionDoc } from "./concepts/sessioning";
@@ -12,6 +12,7 @@ class Routes {
   @Router.post("/login")
   async logIn(session: SessionDoc, username: string) {
     // We don't have any authentication yet, we can imagine it would by synchronized here
+    Authing.assertUsernameExists(username);
     Sessioning.start(session, username);
     return { msg: "Logged in!", user: username };
   }
